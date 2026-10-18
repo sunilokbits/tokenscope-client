@@ -54,5 +54,8 @@ param buildSubnetPrefix = ''
 param registerDnsZoneGroups = true
 param monitorQueryPrivateOnly = false
 
-param enableFrontDoor = false
+param enableFrontDoor = true
+param frontDoorSku = 'Premium'
+// Empty until the first Front Door apply; then the frontDoorInstanceId output (enforces X-Azure-FDID).
+param frontDoorId = readEnvironmentVariable('FRONT_DOOR_ID', '')
 param keyVaultCreateMode = 'default'
