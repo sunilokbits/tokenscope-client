@@ -406,6 +406,7 @@ var regionShortMap = {
   australiaeast: 'aue'
   westus3: 'wus3'
   westeurope: 'weu'
+  northeurope: 'neu'
 }
 var regionShort = contains(regionShortMap, location) ? regionShortMap[location] : location
 var nameSuffix = '${projectName}-${empty(envNameLabel) ? env : envNameLabel}-${regionShort}'
