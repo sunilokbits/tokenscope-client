@@ -50,6 +50,7 @@ jobs:
       BOOTSTRAP_ADMIN_EMAIL: ${{ vars.BOOTSTRAP_ADMIN_EMAIL }}
       ALERT_NOTIFICATION_EMAIL: ${{ vars.ALERT_NOTIFICATION_EMAIL }}
       WORKER_BASE_URL: ${{ vars.WORKER_BASE_URL }}
+      FRONT_DOOR_ID: ${{ vars.FRONT_DOOR_ID }}
       # Secrets.
       PG_ADMIN_LOGIN: ${{ secrets.PG_ADMIN_LOGIN }}
       PG_ADMIN_PASSWORD: ${{ secrets.PG_ADMIN_PASSWORD }}
