@@ -1,0 +1,48 @@
+# TokenScope CI/CD — promotes every push to main through dev → uat → prod.
+# uat and prod wait for approval through the GitHub environment protection rules.
+name: TokenScope CI/CD
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - '**/*.md'
+  workflow_dispatch:
+
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  dev-infra:
+    uses: ./.github/workflows/tokenscope-infra.yml
+    with: { environment: dev, mode: apply }
+    secrets: inherit
+  dev-deploy:
+    needs: dev-infra
+    uses: ./.github/workflows/tokenscope-deploy.yml
+    with: { environment: dev }
+    secrets: inherit
+
+  uat-infra:
+    needs: dev-deploy
+    uses: ./.github/workflows/tokenscope-infra.yml
+    with: { environment: uat, mode: apply }
+    secrets: inherit
+  uat-deploy:
+    needs: uat-infra
+    uses: ./.github/workflows/tokenscope-deploy.yml
+    with: { environment: uat }
+    secrets: inherit
+
+  prod-infra:
+    needs: uat-deploy
+    uses: ./.github/workflows/tokenscope-infra.yml
+    with: { environment: prod, mode: apply }
+    secrets: inherit
+  prod-deploy:
+    needs: prod-infra
+    uses: ./.github/workflows/tokenscope-deploy.yml
+    with: { environment: prod }
+    secrets: inherit

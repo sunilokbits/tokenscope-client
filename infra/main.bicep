@@ -42,6 +42,9 @@ param location string = resourceGroup().location
 @description('Project name used in resource naming. Leave as `tokenscope` unless you are forking.')
 param projectName string = 'tokenscope'
 
+@description('Environment label used in resource names only (e.g. `uat` for an env deployed with env=staging). Empty = env.')
+param envNameLabel string = ''
+
 @description('Container image tag to deploy. Override at apply time; defaults to `latest` for first apply.')
 param imageTag string = 'latest'
 
@@ -402,9 +405,10 @@ param tags object = {
 var regionShortMap = {
   australiaeast: 'aue'
   westus3: 'wus3'
+  westeurope: 'weu'
 }
 var regionShort = contains(regionShortMap, location) ? regionShortMap[location] : location
-var nameSuffix = '${projectName}-${env}-${regionShort}'
+var nameSuffix = '${projectName}-${empty(envNameLabel) ? env : envNameLabel}-${regionShort}'
 
 // ── User-Assigned Managed Identity ────────────────────────────────
 // Created at root scope so its principalId is available BEFORE any
